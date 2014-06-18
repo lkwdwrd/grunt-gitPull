@@ -18,6 +18,7 @@ module.exports = function (grunt) {
 
   function gitCMD( cmd, repo ) {
     return function( done ){
+      console.log( 'Processing ' + repo );
       var process = grunt.util.spawn( { cmd: 'git', args: cmd, opts: { stdio: 'inherit' } }, done );
     };
   }
@@ -49,7 +50,7 @@ module.exports = function (grunt) {
         }
         cmd = [ '-C', relPath.inner, 'clone', repos[ i ].repo, '.' ];
       }
-      commands.push( gitCMD( cmd ) );
+      commands.push( gitCMD( cmd, repos[ i ].repo ) );
     }
     // run the commands in parallel.
     async.parallel( commands, done );

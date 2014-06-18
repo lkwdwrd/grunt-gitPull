@@ -25,8 +25,10 @@ In your project's Gruntfile, add a section named `gitPull` to the data object pa
 ```js
 grunt.initConfig({
   gitPull: {
-    repos: {
-      // repo -> path array pairs
+    set: {
+      repos: [
+        // array of object with relative path arrays and repo keys.
+      ]
     },
   },
 })
@@ -40,17 +42,31 @@ In this example, the default options are used to do something with whatever. So 
 ```js
 grunt.initConfig({
   gitPull: {
-    repos: {
-      'git@git.repository.com/myRepo.git': ['relative', 'path'], // relative/path/
-      'git@git.repository.com/otherRepo.git': ['another', 'path'] // another/path/
+    example: {
+      repos: [
+        {
+          path: ['relative', 'path'], // relative/path/
+          repo: 'git@git.repository.com/myRepo.git'
+        },
+        {
+          path: ['another', 'path'] // another/path/
+          repo: 'git@git.repository.com/otherRepo.git'
+        }
+      ]
     },
   },
 })
 ```
 
 ## Release History
+**0.1.1**
+
+ - Report which repo is being processed.
+ - Fix README docs.
+
 **0.1.0**
- - First release
+
+ - First release.
  - Basic git clone/pull behavior.
 
 ## License
