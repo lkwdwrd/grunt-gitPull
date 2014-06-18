@@ -59,6 +59,10 @@ grunt.initConfig({
 ```
 
 ## Release History
+**0.1.2**
+
+ - Parse out the repo name rather than specifying it.
+
 **0.1.1**
 
  - Report which repo is being processed.

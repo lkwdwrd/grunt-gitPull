@@ -32,16 +32,29 @@ module.exports = function (grunt) {
         commands = [],
         repos = this.data.repos,
         relPath = {},
-        cmd;
+        cmd, dir;
 
     // Gather repo commands.
     for ( var i = 0, length = repos.length; i < length; i++ ) {
+      // parse the repo name
+      dir = repos[ i ].repo.match(/\/([^\/]+?)(?:.git)?$/);
+      if ( ! dir[1] ) {
+        grunt.log.warn('There was some trouble parsing the repository ' + repos[ i ].repo );
+        continue;
+      }
+      dir = dir[1];
+
+      // Set up working paths.
       relPath.outer = path.join.apply( this, repos[ i ].path );
-      relPath.inner = relPath.outer + path.sep + repos[ i ].dir;
+      relPath.inner = relPath.outer + path.sep + dir;
+      
+      // validate outer directory
       if ( ! grunt.file.isDir( relPath.outer ) ) {
         grunt.log.warn('The directory "' + relPath + '" not found.');
-        return false;
+        continue;
       }
+      
+      // Set up pull or clone
       if ( grunt.file.isDir( relPath.inner + path.sep  + '.git' ) ) {
         cmd = [ '-C', relPath.inner, 'pull' ];
       } else {
