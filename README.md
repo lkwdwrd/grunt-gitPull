@@ -59,6 +59,10 @@ grunt.initConfig({
 ```
 
 ## Release History
+**0.1.4**
+
+ - Support older version of git
+ 
 **0.1.2**
 
  - Parse out the repo name rather than specifying it.

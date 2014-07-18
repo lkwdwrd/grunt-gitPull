@@ -37,12 +37,16 @@ module.exports = function (grunt) {
     // Gather repo commands.
     for ( var i = 0, length = repos.length; i < length; i++ ) {
       // parse the repo name
-      dir = repos[ i ].repo.match(/\/([^\/]+?)(?:.git)?$/);
-      if ( ! dir[1] ) {
-        grunt.log.warn('There was some trouble parsing the repository ' + repos[ i ].repo );
-        continue;
+      if ( repos[ i ].dir ) {
+        dir = repos[ i ].dir;
+      } else {
+        dir = repos[ i ].repo.match(/\/([^\/]+?)(?:.git)?$/);
+        if ( ! dir[1] ) {
+          grunt.log.warn('There was some trouble parsing the repository ' + repos[ i ].repo );
+          continue;
+        }
+        dir = dir[1];
       }
-      dir = dir[1];
 
       // Set up working paths.
       relPath.outer = path.join.apply( this, repos[ i ].path );
@@ -56,12 +60,12 @@ module.exports = function (grunt) {
       
       // Set up pull or clone
       if ( grunt.file.isDir( relPath.inner + path.sep  + '.git' ) ) {
-        cmd = [ '-C', relPath.inner, 'pull' ];
+        cmd = [ '--git-dir=' + relPath.inner + '/.git', 'pull' ];
       } else {
         if ( ! grunt.file.isDir( relPath.inner ) ) {
           grunt.file.mkdir( relPath.inner );
         }
-        cmd = [ '-C', relPath.inner, 'clone', repos[ i ].repo, '.' ];
+        cmd = [ 'clone', repos[ i ].repo, relPath.inner ];
       }
       commands.push( gitCMD( cmd, repos[ i ].repo ) );
     }
