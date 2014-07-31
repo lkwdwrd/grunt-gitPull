@@ -1,6 +1,6 @@
 {
   "name": "grunt-gitpull",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Clone and Pull repos with Grunt",
   "homepage": "https://github.com/lkwdwrd/grunt-gitPull",
   "repository": "https://github.com/lkwdwrd/grunt-gitPull",
