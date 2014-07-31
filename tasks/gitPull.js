@@ -38,7 +38,7 @@ module.exports = function (grunt) {
     for ( var i = 0, length = repos.length; i < length; i++ ) {
       // Make sure we have a repo
       if ( ! repos[ i ].repo ) {
-        return;
+        continue;
       }
 
       // parse the repo name
